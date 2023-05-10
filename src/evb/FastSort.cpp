@@ -1,4 +1,3 @@
-#include "EventBuilder.h"
 #include "FastSort.h"
 
 namespace EventBuilder {
@@ -21,12 +20,7 @@ namespace EventBuilder {
 			fastEvent.cebraArray[i] = cebrblank;
 	}
 
-/*	void FastSort::ResetSABRE() 
-	{
-		for(int i=0; i<5; i++)
-			fastEvent.sabreArray[i] = sblank;
-	}
-*/	
+
 	void FastSort::ResetFocalPlane() 
 	{
 		fastEvent.focalPlane = fpblank;
@@ -71,37 +65,7 @@ namespace EventBuilder {
 		}
 	}
 	
-	/*Assign a set of SABRE data that falls within the coincidence window*/
-	/*
-	void FastSort::ProcessSABRE(unsigned int scint_index) 
-	{
-		for(int i=0; i<5; i++) 
-		{ //loop over SABRE silicons
-			std::vector<DetectorHit> rings;
-			std::vector<DetectorHit> wedges;
-	
-			if(slowEvent.sabreArray[i].rings.size() == 0 || slowEvent.sabreArray[i].wedges.size() == 0) 
-				continue; //save some time on empties
-	
-			//Dump sabre data that doesnt fall within the fast coincidence window with the scint
-			for(unsigned int j=0; j<slowEvent.sabreArray[i].rings.size(); j++) 
-			{
-				float sabreRelTime = fabs(slowEvent.sabreArray[i].rings[j].Time - slowEvent.focalPlane.scintL[scint_index].Time);
-				if(sabreRelTime < si_coincWindow)
-					rings.push_back(slowEvent.sabreArray[i].rings[j]);
-			}
-			for(unsigned int j=0; j<slowEvent.sabreArray[i].wedges.size(); j++) 
-			{
-				float sabreRelTime = fabs(slowEvent.sabreArray[i].wedges[j].Time - slowEvent.focalPlane.scintL[scint_index].Time);
-				if(sabreRelTime < si_coincWindow) 
-					wedges.push_back(slowEvent.sabreArray[i].wedges[j]);
-			}
-		
-			fastEvent.sabreArray[i].rings = rings;
-			fastEvent.sabreArray[i].wedges = wedges;
-		}
-	}
-	*/
+
 
 	/*Assign a set of CEBRA data that falls within the coincidence window*/
 	void FastSort::ProcessCEBRA(unsigned int scint_index) {
@@ -137,8 +101,7 @@ namespace EventBuilder {
 		//loop over scints
 		for(unsigned int i=0; i<slowEvent.focalPlane.scintL.size(); i++) 
 		{
-		//	ResetSABRE();
-		//	ProcessSABRE(i);
+
 			ResetCEBRA();
 			ProcessCEBRA(i);
 			//loop over ion chamber

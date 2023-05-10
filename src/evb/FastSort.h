@@ -22,10 +22,8 @@ namespace EventBuilder {
 	
 	private:
 		void ResetCEBRA();
-	//	void ResetSABRE();
 		void ResetFocalPlane();
 		void ProcessCEBRA(unsigned int scint_index);
-	//	void ProcessSABRE(unsigned int scint_index);
 		void ProcessFocalPlane(unsigned int scint_index, unsigned int ionch_index);
 	
 	//	float si_coincWindow, ion_coincWindow;
@@ -33,7 +31,6 @@ namespace EventBuilder {
 		CoincEvent *event_address, slowEvent;
 		CoincEvent fastEvent, blank;
 		CeBrADetector cebrblank;
-	//	SabreDetector sblank;
 		FPDetector fpblank;
 	
 	};

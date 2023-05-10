@@ -6,7 +6,6 @@
 
 	Written by G.W. McCann Oct. 2020
 */
-#include "EventBuilder.h"
 #include "ChannelMap.h"
 
 namespace EventBuilder {
@@ -61,33 +60,7 @@ namespace EventBuilder {
 				}
 				this_chan.local_channel = std::stoi(partname);
 
-			/*
-			if(type == "SABRERING")
-			{
-				this_chan.type = DetType::Sabre;
-				switch(id)
-				{
-					case 0: this_chan.attribute = DetAttribute::SabreRing0; break;
-					case 1: this_chan.attribute = DetAttribute::SabreRing1; break;
-					case 2: this_chan.attribute = DetAttribute::SabreRing2; break;
-					case 3: this_chan.attribute = DetAttribute::SabreRing3; break;
-					case 4: this_chan.attribute = DetAttribute::SabreRing4; break;
-				}
-				this_chan.local_channel = std::stoi(partname);
-			} 
-			else if(type == "SABREWEDGE") 
-			{
-				this_chan.type = DetType::Sabre;
-				switch(id)
-				{
-					case 0: this_chan.attribute = DetAttribute::SabreWedge0; break;
-					case 1: this_chan.attribute = DetAttribute::SabreWedge1; break;
-					case 2: this_chan.attribute = DetAttribute::SabreWedge2; break;
-					case 3: this_chan.attribute = DetAttribute::SabreWedge3; break;
-					case 4: this_chan.attribute = DetAttribute::SabreWedge4; break;
-				}
-				this_chan.local_channel = std::stoi(partname);
-				*/
+
 			} 
 			else if (type == "FOCALPLANE") 
 			{

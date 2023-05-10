@@ -8,7 +8,6 @@
 
 	Written by G.W. McCann Oct. 2020
 */
-#include "EventBuilder.h"
 #include "CompassFile.h"
 
 namespace EventBuilder {
@@ -43,8 +42,8 @@ namespace EventBuilder {
 		m_eofFlag = false;
 		m_hitUsedFlag = true;
 		m_filename = filename;
+		m_nHits = 0;
 		m_file->open(m_filename, std::ios::binary | std::ios::in);
-	
 		m_file->seekg(0, std::ios_base::end);
 		m_size = m_file->tellg();
 		if(m_size == 2) 
