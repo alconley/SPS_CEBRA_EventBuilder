@@ -5,7 +5,7 @@ This is a software package designed to help experimenters analyze data from SPS-
 It can convert CoMPASS data to ROOT, sort the data in time, build events, perform preliminary analysis and provide basic plots.
 
 ## Installation
-To build and install the event builder, the CMake build system is used. To build, simply run the following commands from the SPS_SABRE_EventBuilder directory:
+To build and install the event builder, the CMake build system is used. To build, simply run the following commands from the SPS_CEBRA_EventBuilder directory:
 ```
 mkdir build
 cd build
