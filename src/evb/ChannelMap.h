@@ -14,7 +14,6 @@ namespace EventBuilder {
 	enum DetType
 	{
 		CEBRA,
-		//Sabre,
 		FocalPlane,
 		NoneType
 	};
@@ -37,18 +36,7 @@ namespace EventBuilder {
 		CEBRA3,
 		CEBRA4,
 		ScintLeftCopy,
-		/*
-		SabreRing0,
-		SabreRing1,
-		SabreRing2,
-		SabreRing3,
-		SabreRing4,
-		SabreWedge0,
-		SabreWedge1,
-		SabreWedge2,
-		SabreWedge3,
-		SabreWedge4,
-		*/
+
 		NoneAttr
 	};
 	

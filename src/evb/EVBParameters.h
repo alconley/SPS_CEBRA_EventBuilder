@@ -16,7 +16,7 @@ namespace EventBuilder {
 
 		double slowCoincidenceWindow = 3.0e6;
 		double fastCoincidenceWindowIonCh = 0.0;
-		double fastCoincidenceWindowSABRE = 0.0;
+		double fastCoincidenceWindowCEBRA = 0.0;
 
 		int ZT = 6;
 		int AT = 12;

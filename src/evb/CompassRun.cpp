@@ -289,7 +289,7 @@ namespace EventBuilder {
 		CoincEvent this_event;
 		std::vector<CoincEvent> fast_events;
 		SlowSort coincidizer(m_params.slowCoincidenceWindow, m_params.channelMapFile);
-		FastSort speedyCoincidizer(m_params.fastCoincidenceWindowSABRE, m_params.fastCoincidenceWindowIonCh);
+		FastSort speedyCoincidizer(m_params.fastCoincidenceWindowCEBRA, m_params.fastCoincidenceWindowIonCh);
 	
 		FlagHandler flagger;
 	
@@ -458,7 +458,7 @@ namespace EventBuilder {
 		CoincEvent this_event;
 		std::vector<CoincEvent> fast_events;
 		SlowSort coincidizer(m_params.slowCoincidenceWindow, m_params.channelMapFile);
-		FastSort speedyCoincidizer(m_params.fastCoincidenceWindowSABRE, m_params.fastCoincidenceWindowIonCh);
+		FastSort speedyCoincidizer(m_params.fastCoincidenceWindowCEBRA, m_params.fastCoincidenceWindowIonCh);
 		SFPAnalyzer analyzer(m_params.ZT, m_params.AT, m_params.ZP, m_params.AP, m_params.ZE, m_params.AE, m_params.beamEnergy, m_params.spsAngle, m_params.BField);
 	
 		std::vector<TParameter<Double_t>> parvec;

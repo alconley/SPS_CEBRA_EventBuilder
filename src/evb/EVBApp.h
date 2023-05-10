@@ -54,18 +54,6 @@ namespace EventBuilder {
 		EVBParameters m_params;
 		std::shared_ptr<EVBWorkspace> m_workspace;
 		double m_progressFraction;
-	
-		std::string m_workspace;
-		std::string m_mapfile, m_shiftfile;
-		std::string m_cutList;
-		std::string m_scalerfile;
-	
-		double m_SlowWindow;
-		double m_FastWindowIonCh;
-		double m_FastWindowCEBRA;
-	
-		RunCollector grabber;
-
 		ProgressCallbackFunc m_progressCallback;
 	
 	};

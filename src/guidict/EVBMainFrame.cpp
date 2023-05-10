@@ -221,7 +221,6 @@ EVBMainFrame::EVBMainFrame(const TGWindow* p, UInt_t w, UInt_t h) :
 	eventFrame->AddFrame(slowFrame, fhints);
 	eventFrame->AddFrame(fastICFrame, fhints);
 	eventFrame->AddFrame(fastCEBRAFrame, fhints);
-//	eventFrame->AddFrame(fastSABREFrame, fhints);
 	eventFrame->AddFrame(opFrame, fhints);
 	eventFrame->AddFrame(rminFrame, fhints);
 	eventFrame->AddFrame(rmaxFrame, fhints);

@@ -202,7 +202,8 @@ namespace EventBuilder {
             j=j++;
             
     pevent.cebraArray[j] = event.cebraArray[j];
-  }
+		}
+	}
 
 		/*Make some histograms and xavg*/
 		MyFill("anodeBack vs scintLeft",512,0,4096,pevent.scintLeft,512,0,4096,pevent.anodeBack);

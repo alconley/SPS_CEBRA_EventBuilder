@@ -62,7 +62,7 @@ namespace EventBuilder {
 		m_params.timeShiftFile = data["TimeShiftFile"].as<std::string>();
 		m_params.slowCoincidenceWindow = data["SlowCoincidenceWindow(ps)"].as<double>();
 		m_params.fastCoincidenceWindowIonCh = data["FastCoincidenceWinowIonCh(ps)"].as<double>();
-		m_params.fastCoincidenceWindowSABRE = data["FastCoincidenceWinowCEBRA(ps)"].as<double>();
+		m_params.fastCoincidenceWindowCEBRA = data["FastCoincidenceWinowCEBRA(ps)"].as<double>();
 		m_params.ZT = data["ZT"].as<int>();
 		m_params.AT = data["AT"].as<int>();
 		m_params.ZP = data["ZP"].as<int>();
@@ -106,7 +106,7 @@ namespace EventBuilder {
 		yamlStream << YAML::Key << "TimeShiftFile" << YAML::Value << m_params.timeShiftFile;
 		yamlStream << YAML::Key << "SlowCoincidenceWindow(ps)" << YAML::Value << m_params.slowCoincidenceWindow;
 		yamlStream << YAML::Key << "FastCoincidenceWinowIonCh(ps)" << YAML::Value << m_params.fastCoincidenceWindowIonCh;
-		yamlStream << YAML::Key << "FastCoincidenceWinowCEBRA(ps)" << YAML::Value << m_params.fastCoincidenceWindowSABRE;
+		yamlStream << YAML::Key << "FastCoincidenceWinowCEBRA(ps)" << YAML::Value << m_params.fastCoincidenceWindowCEBRA;
 		yamlStream << YAML::Key << "ZT" << YAML::Value << m_params.ZT;
 		yamlStream << YAML::Key << "AT" << YAML::Value << m_params.AT;
 		yamlStream << YAML::Key << "ZP" << YAML::Value << m_params.ZP;
