@@ -1,0 +1,2 @@
+Name File VarX VarY
+edeProtons /home/spieker-group/Experiments/REU_July_2023/WorkingDir/cuts/xavg_anodeBack_protons.root xavg anodeBack

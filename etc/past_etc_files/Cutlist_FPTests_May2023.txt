@@ -1,0 +1,2 @@
+Name File VarX VarY
+edeProtons /home/spieker-group/Experiments/FocalPlaneTests_May_2023/WorkingDir/cuts/fptests_protons.root scintLeft anodeBack
