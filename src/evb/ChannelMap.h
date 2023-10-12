@@ -36,6 +36,9 @@ namespace EventBuilder {
 		CEBRA2,
 		CEBRA3,
 		CEBRA4,
+		CEBRA5,
+		CEBRA6,
+
 		ScintLeftCopy,
 		/*
 		SabreRing0,

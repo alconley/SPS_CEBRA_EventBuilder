@@ -6,7 +6,7 @@ RUNNO=$1
 # BINARYDIR=/data0/data_experiments/2022_Sep_CeBrA_SPS/DAQ/run_$RUNNO/UNFILTERED
 # BINARYDIR=/home/spieker-group/Compass/56Co/DAQ/run_$RUNNO/UNFILTERED
 # BINARYDIR=/home/spieker-group/Compass/FocalPlaneTests_May2023/DAQ/run_$RUNNO/UNFILTERED
-BINARYDIR=/home/spieker-group/Compass/July2023_REU/DAQ/run_$RUNNO/UNFILTERED
+BINARYDIR=/home/spieker-group/Compass/144Sm6Lid_July_2023/DAQ/run_$RUNNO/UNFILTERED
 
 
 # ARCHIVE=/home/spieker-group/Experiments/SPS_CEBRA_Oct2022ad/raw_binary/run_$RUNNO.tar.gz
@@ -14,8 +14,7 @@ BINARYDIR=/home/spieker-group/Compass/July2023_REU/DAQ/run_$RUNNO/UNFILTERED
 # ARCHIVE=/home/spieker-group/Experiments/SPS_CEBRA_Sept_2022/WorkingDir/raw_binary/run_$RUNNO.tar.gz
 # ARCHIVE=/home/spieker-group/Experiments/SPS_CEBRA_Sept_2022/56Co/raw_binary/run_$RUNNO.tar.gz
 # ARCHIVE=/home/spieker-group/Experiments/FocalPlaneTests_May_2023/WorkingDir/raw_binary/run_$RUNNO.tar.gz
-ARCHIVE=/home/spieker-group/Experiments/REU_July_2023/WorkingDir/raw_binary/run_$RUNNO.tar.gz
-
+ARCHIVE=/home/spieker-group/Experiments/144Sm6Lid_July_2023/WorkingDir/raw_binary/run_$RUNNO.tar.gz
 
 echo "Running archivist for binary data in $BINARYDIR to archive $ARCHIVE..."
 

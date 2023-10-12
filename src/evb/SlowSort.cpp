@@ -62,6 +62,9 @@ namespace EventBuilder {
 		varMap[DetAttribute::CEBRA2] = &m_event.cebraArray[2].cebr;
 		varMap[DetAttribute::CEBRA3] = &m_event.cebraArray[3].cebr;
 		varMap[DetAttribute::CEBRA4] = &m_event.cebraArray[4].cebr;
+		varMap[DetAttribute::CEBRA5] = &m_event.cebraArray[5].cebr;
+		varMap[DetAttribute::CEBRA6] = &m_event.cebraArray[6].cebr;
+
 
 
 		varMap[DetAttribute::ScintLeft] = &m_event.focalPlane.scintL;
@@ -192,7 +195,7 @@ namespace EventBuilder {
 			sort(m_event.sabreArray[s].wedges.begin(), m_event.sabreArray[s].wedges.end(), SabreSort);
 		}
 		*/
-		for(int s=0; s<5; s++) {
+		for(int s=0; s<7; s++) {
    			sort(m_event.cebraArray[s].cebr.begin(), m_event.cebraArray[s].cebr.end(), CebraSort);
   		}
 	}

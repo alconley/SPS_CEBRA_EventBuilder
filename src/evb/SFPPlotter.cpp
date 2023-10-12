@@ -166,10 +166,11 @@ namespace EventBuilder {
 			MyFill(table,"delayFR_RelScint_NoCuts",3000,-3000,3000,delayFR_toScint);
 			MyFill(table,"delayBL_RelScint_NoCuts",3000,-3000,3000,delayBL_toScint);
 			MyFill(table,"delayBR_RelScint_NoCuts",3000,-3000,3000,delayBR_toScint);
+			
 
 			
 			
-			for(int i=0; i<5; i++) {
+			for(int i=0; i<7; i++) {
 
 				//Cebra Relative Time to Left Scint Plots
 				Double_t cebraRelT_toScint = ev.cebraTime[i] - ev.scintLeftTime;
@@ -186,11 +187,43 @@ namespace EventBuilder {
 
 
 		//plots with no cuts and no scint stuff
-		for(int i=0; i<5; i++) {
+		for(int i=0; i<7; i++) {
 			if(ev.cebraE[i] != -1){
+				/* 52Cr shift
+				double cebra_E_ADCShift_noCuts[7] = {	1.0			*ev.cebraE[0]+ 0.0,
+											1.16131093081198* ev.cebraE[1] +	1.02032901041338,
+											1.10565050787665* ev.cebraE[2] +	3.02851468888753,
+											0.986112617988499*ev.cebraE[3] +	0.782250189866573,
+											0.963225943196269*ev.cebraE[4] +	0.251518651971196,
+											1.0			*ev.cebraE[5]+ 0.0,
+											1.0			*ev.cebraE[6]+ 0.0,
+											};
+				*/
+				/* 1st go at run 237
+				double cebra_E_ADCShift_noCuts[7] = 
+											{	1.0			*ev.cebraE[0]+ 0.0,
+											1.25300201886546* ev.cebraE[1] +	0.828933342265856,
+											1.15014029055874* ev.cebraE[2] +	3.6869157764138,
+											0.984203202583664*ev.cebraE[3] +	3.64546001451814,
+											0.95646028621967*ev.cebraE[4] +		5.17440495207785,
+											1.3112950175652*ev.cebraE[5]+ 		4.63719742320188,
+											1.26525914808843*ev.cebraE[6]+ 		3.61197268481905,
+											};
+				*/
+				double cebra_E_ADCShift_noCuts[7] = {	1.0			*ev.cebraE[0]+ 0.0,
+											1.25926513604622* ev.cebraE[1] +	-0.816221301153746,
+											1.15315066600388* ev.cebraE[2] +	2.3836130910301,
+											0.996775914060743*ev.cebraE[3] +	0.349941524299766,
+											0.96778941200895*ev.cebraE[4] +		2.15718175526911,
+											1.29891031253784*ev.cebraE[5]+ 		5.52121035990547,
+											1.24777301394747*ev.cebraE[6]+ 		5.67352314139589,
+											};
 
 				MyFill(table,fmt::format("cebra_E_{}_noCuts",i),1024,0,4096,ev.cebraE[i]);
 				MyFill(table,fmt::format("cebra_E_{}_cebraTime_noCuts",i),7200, 0, 7200, ev.cebraTime[i] / 1e9, 1024,0,4096,ev.cebraE[i]);
+				if(ev.x1 != -1e6 && ev.x2 != -1e6){
+				MyFill(table,fmt::format("cebra_E_{}_ADCShift_noCuts",i),1024,0,4096,cebra_E_ADCShift_noCuts[i]);
+				}
 
 				//Cebra ADC Channel shift (to make all the detectors line up with each other) with the corresponding plots
 				//good for run 82 - 123
@@ -342,14 +375,29 @@ namespace EventBuilder {
 		MyFill(table,"x2_cathode_Cut",600,-300,300,ev.x2,512,0,4096,ev.cathode);
 		MyFill(table,"xavg_cathode_Cut",600,-300,300,ev.xavg,512,0,4096,ev.cathode);
 
-		double cebra_E_ADCShift[5] = {	1.0			*ev.cebraE[0]+ 0.0,
-											1.10926476470248* ev.cebraE[1] +	1.08683520943367,
-											1.10769015886069* ev.cebraE[2] +	7.96018591651148,
-											0.976988483900976*ev.cebraE[3] +	6.09760569824573,
-											0.947475209624302*ev.cebraE[4] +	8.03998545288471
+		double cebra_E_ADCShift[7] = {	1.0			*ev.cebraE[0]+ 0.0,
+											1.25926513604622* ev.cebraE[1] +	-0.816221301153746,
+											1.15315066600388* ev.cebraE[2] +	2.3836130910301,
+											0.996775914060743*ev.cebraE[3] +	0.349941524299766,
+											0.96778941200895*ev.cebraE[4] +		2.15718175526911,
+											1.29891031253784*ev.cebraE[5]+ 		5.52121035990547,
+											1.24777301394747*ev.cebraE[6]+ 		5.67352314139589,
 											};
 
-											
+
+
+// shift from run 237 on 34S(d,pg)
+/*
+		double cebra_E_ADCShift[7] = {	1.0			*ev.cebraE[0]+ 0.0,
+											1.25300201886546* ev.cebraE[1] +	0.828933342265856,
+											1.15014029055874* ev.cebraE[2] +	3.6869157764138,
+											0.984203202583664*ev.cebraE[3] +	3.64546001451814,
+											0.95646028621967*ev.cebraE[4] +		5.17440495207785,
+											1.3112950175652*ev.cebraE[5]+ 		4.63719742320188,
+											1.26525914808843*ev.cebraE[6]+ 		3.61197268481905,
+											};				
+														
+*/
 
 
 	
@@ -373,7 +421,7 @@ namespace EventBuilder {
 			MyFill(table, "xavg_timeDifferenceScints", 600, -300, 300, ev.xavg, 12800, -3200,3200, ev.scintRightTime - ev.scintLeftTime);
 
 	
-			for(int i=0; i<5; i++) {
+			for(int i=0; i<7; i++) {
 
 				//CeBrA Relative Time to Left Scint Cut Plots
 				Double_t cebraRelT_toScint = ev.cebraTime[i] - ev.scintLeftTime;
@@ -383,16 +431,43 @@ namespace EventBuilder {
 				MyFill(table,fmt::format("cebra_RelTime_toScint_{}_Cut",i),6400,-3200,3200,cebraRelT_toScint);
 				MyFill(table,fmt::format("cebra_RelTime_toScint_{}_theta_Cut",i),6400,-3200,3200,cebraRelT_toScint,100,0,TMath::Pi()/2.,ev.theta);
 
+				if(i < 4){
+				MyFill(table,"cebra_RelTime_toScint_zonys_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint);}
+
+				if(ev.xavg >= 35 && ev.xavg <= 45 && cebra_E_ADCShift[i] > 1030 && cebra_E_ADCShift[i] < 1250){
+
+				if(i < 4){
+				MyFill(table,"cebra_RelTime_toScint_zonys_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+				else if(i == 4){
+				MyFill(table,"cebra_RelTime_toScint_3x4_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+				else if(i > 4){
+				MyFill(table,"cebra_RelTime_toScint_1x1_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+
+				}
+
 				//adjust accordingly using the "cebra_RelTime_toScint_I" plots
 
-				double cebra_RelTime_toScint_Shift[5] = {	1162,  
-															1160,
-															1159,
-															1159,
-															1129};
+
+
+				double cebra_RelTime_toScint_Shift[7] = {						1166, 
+															1164,
+															1164,
+															1164,
+															1133,
+															1171,
+															1171};
+
+/*
+				double cebra_RelTime_toScint_Shift[7] = {						1159.24, 
+															1157.28,
+															1157.21,
+															1156.66,
+															1126.73,
+															1163.31,
+															1164.49};
 
 // time shifts for 8.3 kG setting 52Cr(d,pg)
-/*
+
 				double cebra_RelTime_toScint_Shift[5] = {	1155.542,  
 															1153.885,
 															1153.527,
@@ -403,22 +478,50 @@ namespace EventBuilder {
 
 				//CeBrA time cut ... make sure the shifts are good
 				// double cebra_RelTime_Width = 6.0;
-				double cebra_RelTime_Width = 2.4;
+				double cebra_RelTime_Width = 4;
 
 				double cebraRelT_toScint_Shifted = cebraRelT_toScint + cebra_RelTime_toScint_Shift[i];
 				MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintRight", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toRightScint);
 				MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintLeft", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toScint);
 
+				if(i < 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_zonys_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
+
+
+				if(i == 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_3x4_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
+
+				if(i > 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_1x1_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
+
+/*
+				if(ev.xavg >= 35 && ev.xavg <= 45 && cebra_E_ADCShift[i] > 1030 && cebra_E_ADCShift[i] < 1250){
+
+
+				if(i < 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_zonys_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+				else if(i == 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_3x4_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+				else if(i > 4){
+				MyFill(table,"cebra_RelTime_toScint_Shifted_1x1_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+
+				}
+*/
+
+
 				if(cebraRelT_toScint_Shifted > -cebra_RelTime_Width && cebraRelT_toScint_Shifted < cebra_RelTime_Width){
 					
 					MyFill(table,"xavg_TimeCutShift_Cut",600,-300,300,ev.xavg);
+					// MyFill(table,"xavg_TimeCutShift_Calibrated_Cut",2000,0,10000,-16.1153737975147* ev.xavg+ 5214.60247016019);
 					MyFill(table,fmt::format("cebra_E_{}_TimeCutShift_Cut",i),512,0,4096,ev.cebraE[i]);
 					MyFill(table,fmt::format("xavg_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.xavg,512,0,4096,ev.cebraE[i]);
 					MyFill(table,fmt::format("x1_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.x1,512,0,4096,ev.cebraE[i]);
 					MyFill(table,fmt::format("cebra_RelTime_toScint_{}_TimeCutShift_Cut",i),400,-100,100,cebraRelT_toScint_Shifted);
 
 					//All the detectors summed using the ADC Shift values
-					MyFill(table,"AA_xavg_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.xavg,512,0,4096,cebra_E_ADCShift[i]);
+					MyFill(table,"AA_xavg_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.xavg,1024,0,4096,cebra_E_ADCShift[i]);
+					
+					// MyFill(table,"AA_xavg_cebraE_Sum_TimeCutShift_Calibrated_Cut",2000,0,10000,-16.1153737975147* ev.xavg+ 5214.60247016019,2000,0,10000,6.84991856 * cebra_E_ADCShift[i] + 51.04455367);
 					MyFill(table,"AA_x1_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.x1,512,0,4096,cebra_E_ADCShift[i]);
 
 					//Energy Calibrated to the GS band 
@@ -479,7 +582,7 @@ namespace EventBuilder {
 
 
 					//Zony plots (small CeBr3 detectors, small zebras, like a small horses or a pony)
-					if(i != 4){
+					if(i != 4 && i != 5 && i != 6){
 							// MyFill(table,"cebraE_zony_cebraE4_TimeCut_Cut",512,0,4096,cebra_E_ADCShift[i],512,0,4096,cebra_E_ADCShift[4]);
 							MyFill(table,"xavg_cebraE_zony_TimeCutShift_Cut",600,-300,300,ev.xavg,512,0,4096,cebra_E_ADCShift[i]);
 							MyFill(table,"x1_cebraE_zony_TimeCutShift_Cut",600,-300,300,ev.x1,512,0,4096,cebra_E_ADCShift[i]);
@@ -511,7 +614,7 @@ namespace EventBuilder {
 
 
 			//	plots that do not contain scint stuff
-			for(int i=0; i<5; i++) {
+			for(int i=0; i<7; i++) {
        			if(ev.cebraE[i] != -1 && ev.x1 != -1e6 && ev.x2 != -1e6){
 	
 					MyFill(table,fmt::format("cebra_E_{}_Cut",i),1024,0,4096,ev.cebraE[i]);

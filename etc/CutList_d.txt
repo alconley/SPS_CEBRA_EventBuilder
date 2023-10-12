@@ -1,0 +1,2 @@
+Name File VarX VarY
+edeDeuterons /home/spieker-group/Experiments/144Sm6Lid_July_2023/WorkingDir/cuts/dcut12_89kG.root scintLeft anodeBack

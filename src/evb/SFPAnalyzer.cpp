@@ -23,6 +23,9 @@ namespace EventBuilder {
         event_address = new CoincEvent();
         rootObj = new THashTable();
         GetWeights();
+
+        EVB_INFO("Calculated z shift of focal plane:",zfp);
+
     }
    
     SFPAnalyzer::~SFPAnalyzer()
@@ -180,7 +183,7 @@ namespace EventBuilder {
         }
         */
    
-        for(int j=0; j<5; j++) {
+        for(int j=0; j<7; j++) {
            
             if(!event.cebraArray[j].cebr.empty())
             {
@@ -226,6 +229,18 @@ namespace EventBuilder {
                     pevent.cebraE4 = pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
                     pevent.cebraChannel4 = event.cebraArray[j].cebr[0].Ch;
                     pevent.cebraTime4 = event.cebraArray[j].cebr[0].Time;
+                }
+
+                else if(j==5){
+                    pevent.cebraE5 = pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
+                    pevent.cebraChannel5 = event.cebraArray[j].cebr[0].Ch;
+                    pevent.cebraTime5 = event.cebraArray[j].cebr[0].Time;
+                }
+
+                else if(j==6){
+                    pevent.cebraE6 = pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
+                    pevent.cebraChannel6 = event.cebraArray[j].cebr[0].Ch;
+                    pevent.cebraTime6 = event.cebraArray[j].cebr[0].Time;
                 }
      
             pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
@@ -278,6 +293,10 @@ namespace EventBuilder {
             MyFill("CebraE3",4096,0,4096,pevent.cebraE[3]);}
         if(pevent.cebraE[4]!=-1){ 
             MyFill("CebraE4",4096,0,4096,pevent.cebraE[4]);}
+        if(pevent.cebraE[5]!=-1){ 
+            MyFill("CebraE5",4096,0,4096,pevent.cebraE[5]);}
+        if(pevent.cebraE[6]!=-1){ 
+            MyFill("CebraE6",4096,0,4096,pevent.cebraE[6]);}
 
 
          

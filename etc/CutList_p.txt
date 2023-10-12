@@ -1,0 +1,2 @@
+Name File VarX VarY
+edeProtons /home/spieker-group/Experiments/144Sm6Lid_July_2023/WorkingDir/cuts/ede_protons_7.2kG.root scintLeft anodeBack

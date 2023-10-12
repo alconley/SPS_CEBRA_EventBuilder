@@ -44,7 +44,7 @@ struct CoincEvent
 {
   FPDetector focalPlane;
   //SabreDetector sabreArray[5]; //index = ChannelMap Id# -1
-  CeBrADetector cebraArray[5]; 
+  CeBrADetector cebraArray[7]; 
 };
 
 struct ProcessedEvent 
@@ -75,21 +75,26 @@ struct ProcessedEvent
   double monitorE = -1, monitorShort = -1;
   double monitorTime = -1;
 
-  double cebraE[5] = {-1,-1,-1,-1,-1};
-  double cebraChannel[5] = {-1,-1,-1,-1,-1};
-  double cebraTime[5] = {-1,-1,-1,-1,-1};
+  double cebraE[7] = {-1,-1,-1,-1,-1,-1,-1};
+  double cebraChannel[7] = {-1,-1,-1,-1,-1,-1,-1};
+  double cebraTime[7] = {-1,-1,-1,-1,-1,-1,-1};
 
   double cebraE0 = -1;
   double cebraE1 = -1;
   double cebraE2 = -1;
   double cebraE3 = -1;
   double cebraE4 = -1;
+  double cebraE5 = -1;
+  double cebraE6 = -1;
+
 
   double cebraChannel0 = -1;
   double cebraChannel1 = -1;
   double cebraChannel2 = -1;
   double cebraChannel3 = -1;
   double cebraChannel4 = -1;
+  double cebraChannel5 = -1;
+  double cebraChannel6 = -1;
 
 
   double cebraTime0 = -1;
@@ -97,13 +102,13 @@ struct ProcessedEvent
   double cebraTime2 = -1;
   double cebraTime3 = -1;
   double cebraTime4 = -1;
-
-
+  double cebraTime5 = -1;
+  double cebraTime6 = -1;
 
 
 
  // SabreDetector sabreArray[5]; //index = ChannelMap Id# -1
-  CeBrADetector cebraArray[5];
+  CeBrADetector cebraArray[7];
 };
 
 /*
