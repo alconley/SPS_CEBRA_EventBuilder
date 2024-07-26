@@ -64,6 +64,8 @@ namespace EventBuilder {
 		varMap[DetAttribute::CEBRA4] = &m_event.cebraArray[4].cebr;
 		varMap[DetAttribute::CEBRA5] = &m_event.cebraArray[5].cebr;
 		varMap[DetAttribute::CEBRA6] = &m_event.cebraArray[6].cebr;
+		varMap[DetAttribute::CEBRA7] = &m_event.cebraArray[7].cebr;
+		varMap[DetAttribute::CEBRA8] = &m_event.cebraArray[8].cebr;
 
 
 
@@ -195,7 +197,7 @@ namespace EventBuilder {
 			sort(m_event.sabreArray[s].wedges.begin(), m_event.sabreArray[s].wedges.end(), SabreSort);
 		}
 		*/
-		for(int s=0; s<7; s++) {
+		for(int s=0; s<9; s++) {
    			sort(m_event.cebraArray[s].cebr.begin(), m_event.cebraArray[s].cebr.end(), CebraSort);
   		}
 	}

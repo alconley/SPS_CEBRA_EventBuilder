@@ -78,6 +78,10 @@ namespace EventBuilder {
 		varmap["anodeFront"]  = &m_event.anodeFront;
 		varmap["cathode"] = &m_event.cathode;
 		varmap["delayBackRightE"] = &m_event.delayBackRightE;
+		varmap["delayBackLeftE"] = &m_event.delayBackLeftE;
+		varmap["delayFrontRightE"] = &m_event.delayFrontRightE;
+		varmap["delayFrontLeftE"] = &m_event.delayFrontLeftE;
+
 	}
 	
 	bool CutHandler::IsInside(const ProcessedEvent* eaddress) 

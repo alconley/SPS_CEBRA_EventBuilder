@@ -183,7 +183,7 @@ namespace EventBuilder {
         }
         */
    
-        for(int j=0; j<7; j++) {
+        for(int j=0; j<9; j++) {
            
             if(!event.cebraArray[j].cebr.empty())
             {
@@ -242,6 +242,18 @@ namespace EventBuilder {
                     pevent.cebraChannel6 = event.cebraArray[j].cebr[0].Ch;
                     pevent.cebraTime6 = event.cebraArray[j].cebr[0].Time;
                 }
+
+                else if(j==7){
+                    pevent.cebraE7 = pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
+                    pevent.cebraChannel7 = event.cebraArray[j].cebr[0].Ch;
+                    pevent.cebraTime7 = event.cebraArray[j].cebr[0].Time;
+                }
+
+                else if(j==8){
+                    pevent.cebraE8 = pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
+                    pevent.cebraChannel8 = event.cebraArray[j].cebr[0].Ch;
+                    pevent.cebraTime8 = event.cebraArray[j].cebr[0].Time;
+                }
      
             pevent.cebraE[j] = event.cebraArray[j].cebr[0].Long;
             pevent.cebraChannel[j] = event.cebraArray[j].cebr[0].Ch;
@@ -297,6 +309,10 @@ namespace EventBuilder {
             MyFill("CebraE5",4096,0,4096,pevent.cebraE[5]);}
         if(pevent.cebraE[6]!=-1){ 
             MyFill("CebraE6",4096,0,4096,pevent.cebraE[6]);}
+        if(pevent.cebraE[7]!=-1){ 
+            MyFill("CebraE7",4096,0,4096,pevent.cebraE[7]);}
+        if(pevent.cebraE[8]!=-1){ 
+            MyFill("CebraE8",4096,0,4096,pevent.cebraE[8]);}
 
 
          

@@ -1,0 +1,27 @@
+-------Data Location----------
+WorkspaceDirectory: /home/spieker-group/Experiments/61Ni_CeBrA_July2024/WorkingDir
+-------------------------------
+------Experimental Inputs------
+ChannelMapFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ChannelMap_June2024_REU_61Ni.txt
+ScalerFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ScalerFile_July2024_61Ni.txt
+CutListFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/61Ni_CutList_8.5kG.txt
+ZT: 28
+AT: 61
+ZP: 1
+AP: 2
+ZE: 1
+AE: 1
+BField(G): 8500
+BeamKE(MeV): 16
+Theta(deg): 37
+-------------------------------
+-------Timing Information------
+BoardOffsetFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ShiftMap_July2024_61Ni.txt
+SlowCoincidenceWindow(ps): 3e+06
+FastCoincidenceWindow_IonCh(ps): 250000
+FastCoincidenceWindow_CEBRA(ps): 150000
+-------------------------------
+--------Run Information--------
+MinRun: 20
+MaxRun: 20
+-------------------------------

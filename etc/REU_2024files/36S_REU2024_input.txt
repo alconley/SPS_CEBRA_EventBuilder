@@ -1,0 +1,27 @@
+-------Data Location----------
+WorkspaceDirectory: /home/spieker-group/Experiments/REU_June_2024/Workingdir
+-------------------------------
+------Experimental Inputs------
+ChannelMapFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ChannelMap_June2024_REU_36S.txt
+ScalerFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ScalerFile_July2023_REU.txt
+CutListFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/CutList_36S.txt
+ZT: 16
+AT: 36
+ZP: 1
+AP: 2
+ZE: 1
+AE: 1
+BField(G): 7480
+BeamKE(MeV): 16
+Theta(deg): 20
+-------------------------------
+-------Timing Information------
+BoardOffsetFile: /home/spieker-group/Programs/SPS_CEBRA_EventBuilder/etc/ShiftMap_July2023_REU.txt
+SlowCoincidenceWindow(ps): 3e+06
+FastCoincidenceWindow_IonCh(ps): 250000
+FastCoincidenceWindow_CEBRA(ps): 150000
+-------------------------------
+--------Run Information--------
+MinRun: 10
+MaxRun: 10
+-------------------------------

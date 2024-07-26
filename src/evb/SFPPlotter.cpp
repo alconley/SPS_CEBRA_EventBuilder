@@ -9,6 +9,8 @@
 #include "EventBuilder.h"
 #include "SFPPlotter.h"
 #include <TSystem.h>
+#include <cmath>
+
 
 namespace EventBuilder {
 
@@ -56,7 +58,7 @@ namespace EventBuilder {
 	void SFPPlotter::MakeUncutHistograms(const ProcessedEvent& ev, THashTable* table)
 	{
 
-
+		
 
 		// if(ev.x1 != -1e6 && ev.x2 == -1e6){
 
@@ -103,6 +105,7 @@ namespace EventBuilder {
 		MyFill(table,"xavg_delayBackLeftE_NoCuts",600,-300,300,ev.xavg,512,0,4096,ev.delayBackLeftE);
 		MyFill(table,"x1_x2_NoCuts",600,-300,300,ev.x1,600,-300,300,ev.x2);
 	
+		/*
 		Double_t delayBackAvgE = (ev.delayBackRightE+ev.delayBackLeftE)/2.0;
 		MyFill(table,"x1_delayBackAvgE_NoCuts",600,-300,300,ev.x1,512,0,4096,delayBackAvgE);
 		MyFill(table,"x2_delayBackAvgE_NoCuts",600,-300,300,ev.x2,512,0,4096,delayBackAvgE);
@@ -111,11 +114,12 @@ namespace EventBuilder {
 		MyFill(table,"x1_delayFrontAvgE_NoCuts",600,-300,300,ev.x1,512,0,4096,delayFrontAvgE);
 		MyFill(table,"x2_delayFrontAvgE_NoCuts",600,-300,300,ev.x2,512,0,4096,delayFrontAvgE);
 		MyFill(table,"xavg_delayFrontAvgE_NoCuts",600,-300,300,ev.xavg,512,0,4096,delayFrontAvgE);
-	
+		*/
 		MyFill(table,"scintLeft_anodeBack_NoCuts",512,0,4096,ev.scintLeft,512,0,4096,ev.anodeBack);
 		MyFill(table,"scintLeft_anodeFront_NoCuts",512,0,4096,ev.scintLeft,512,0,4096,ev.anodeFront);
 		MyFill(table,"scintLeft_cathode_NoCuts",512,0,4096,ev.scintLeft,512,0,4096,ev.cathode);
 
+		/*
 		MyFill(table,"scintRight_anodeBack_NoCuts",512,0,4096,ev.scintRight,512,0,4096,ev.anodeBack);
 		MyFill(table,"scintRight_anodeFront_NoCuts",512,0,4096,ev.scintRight,512,0,4096,ev.anodeFront);
 		MyFill(table,"scintRight_cathode_NoCuts",512,0,4096,ev.scintRight,512,0,4096,ev.cathode);
@@ -143,7 +147,7 @@ namespace EventBuilder {
 		MyFill(table,"x2_delayFrontLeftE_noCuts",600,-300,300,ev.x2,512,0,4096,ev.delayFrontLeftE);
 		MyFill(table,"xavg_delayFrontRightE_noCuts",600,-300,300,ev.xavg,512,0,4096,ev.delayFrontRightE);
 		MyFill(table,"xavg_delayFrontLeftE_noCuts",600,-300,300,ev.xavg,512,0,4096,ev.delayFrontLeftE);
-	
+		*/
 		
 
 		/****Timing relative to back anode****/
@@ -170,7 +174,7 @@ namespace EventBuilder {
 
 			
 			
-			for(int i=0; i<7; i++) {
+			for(int i=0; i<9; i++) {
 
 				//Cebra Relative Time to Left Scint Plots
 				Double_t cebraRelT_toScint = ev.cebraTime[i] - ev.scintLeftTime;
@@ -187,18 +191,8 @@ namespace EventBuilder {
 
 
 		//plots with no cuts and no scint stuff
-		for(int i=0; i<7; i++) {
+		for(int i=0; i<9; i++) {
 			if(ev.cebraE[i] != -1){
-				/* 52Cr shift
-				double cebra_E_ADCShift_noCuts[7] = {	1.0			*ev.cebraE[0]+ 0.0,
-											1.16131093081198* ev.cebraE[1] +	1.02032901041338,
-											1.10565050787665* ev.cebraE[2] +	3.02851468888753,
-											0.986112617988499*ev.cebraE[3] +	0.782250189866573,
-											0.963225943196269*ev.cebraE[4] +	0.251518651971196,
-											1.0			*ev.cebraE[5]+ 0.0,
-											1.0			*ev.cebraE[6]+ 0.0,
-											};
-				*/
 				/* 1st go at run 237
 				double cebra_E_ADCShift_noCuts[7] = 
 											{	1.0			*ev.cebraE[0]+ 0.0,
@@ -210,20 +204,56 @@ namespace EventBuilder {
 											1.26525914808843*ev.cebraE[6]+ 		3.61197268481905,
 											};
 				*/
-				double cebra_E_ADCShift_noCuts[7] = {	1.0			*ev.cebraE[0]+ 0.0,
-											1.25926513604622* ev.cebraE[1] +	-0.816221301153746,
-											1.15315066600388* ev.cebraE[2] +	2.3836130910301,
-											0.996775914060743*ev.cebraE[3] +	0.349941524299766,
-											0.96778941200895*ev.cebraE[4] +		2.15718175526911,
-											1.29891031253784*ev.cebraE[5]+ 		5.52121035990547,
-											1.24777301394747*ev.cebraE[6]+ 		5.67352314139589,
-											};
 
+
+				// New ADC Shift for MSS detectors added here! --Bryan
+				// First set of shifts for run 29-87
+				
+				// double cebra_E_ADCShift_noCuts[9] = {	1.0			*ev.cebraE[0]+ 0.0,
+				// 							0.00000408008*pow(ev.cebraE[1],2) +	1.00840708*ev.cebraE[1] + 	0.938657472222278,
+				// 							-0.0000600663*pow(ev.cebraE[2],2) +	1.03301495*ev.cebraE[2] - 	1.614522511,
+				// 							-0.0000379175*pow(ev.cebraE[3],2) +	1.017489848*ev.cebraE[3] - 	0.2155004308,
+				// 							-0.0000528035*pow(ev.cebraE[4],2) +	0.898869329*ev.cebraE[4] - 	2.4707291221,
+				// 							-0.0000301067*pow(ev.cebraE[5],2) + 0.889078563*ev.cebraE[5] - 	2.54885394741,
+				// 							-0.00002838567*pow(ev.cebraE[6],2)+ 0.78627124416*ev.cebraE[6] - 3.414072215,
+				// 							-0.000039218043*pow(ev.cebraE[7],2)+ 1.0216552774*ev.cebraE[7] - 0.1850784735,
+				// 							-0.000017332061*pow(ev.cebraE[8],2)+ 1.0110287171*ev.cebraE[8] - 1.1911854577,
+				// 							};
+				
+
+				// Shifts post-gate change from run 89-187
+				/*
+				double cebra_E_ADCShift_noCuts[9] = {-0.00000900348*pow(ev.cebraE[0],2) + 0.985283015795496*ev.cebraE[0] -1.44061593200826,
+											-2.00230037138795E-05*pow(ev.cebraE[1],2) +	0.978578302719182*ev.cebraE[1] - 1.78269368726461,
+											-4.60458243556237E-05*pow(ev.cebraE[2],2) +	1.03301495*ev.cebraE[2] -1.13041973539458,
+											-2.9099473816247E-05*pow(ev.cebraE[3],2) +	0.982375601397594*ev.cebraE[3] -0.499765577767619,
+											2.34521317635375E-05*pow(ev.cebraE[4],2) +	0.805730155634936*ev.cebraE[4] + 2.11714817275407,
+											-3.81642236218541E-05*pow(ev.cebraE[5],2) + 1.09993027001675*ev.cebraE[5] -0.599697713732553,
+											7.4481655223796E-05*pow(ev.cebraE[6],2)+ 0.66660953405603*ev.cebraE[6] + 2.91777226919729,
+											-6.45199810062847E-05*pow(ev.cebraE[7],2)+ 1.1886126784402*ev.cebraE[7] -1.32091583140408,
+											-2.25371478404457E-05*pow(ev.cebraE[8],2)+ 0.921640195099382*ev.cebraE[8]-1.52617791655928,
+											};
+				*/
+				// Gain shifts for the 7.15kG seeting from run 197-
+				
+				double cebra_E_ADCShift_noCuts[9] = {-2.72156900878375E-19*pow(ev.cebraE[0],2) +	1.0*ev.cebraE[0] -5.6843418860808E-14,
+											-4.97165415075812E-06*pow(ev.cebraE[1],2) +	1.14338957961188*ev.cebraE[1] - 0.445011719623494,
+											-2.35730449363139E-05*pow(ev.cebraE[2],2) +	0.996173496729512*ev.cebraE[2] + 1.7443869915702,
+											-1.32712886414671E-05*pow(ev.cebraE[3],2) +	0.999818365276875*ev.cebraE[3] + 0.941072453624997,
+											-2.76775763630926E-05*pow(ev.cebraE[4],2) +	0.860232802761158*ev.cebraE[4] - 0.459548374380745,
+											-2.22330292983274E-05*pow(ev.cebraE[5],2) + 1.2289729811605*ev.cebraE[5] + 0.283037829606826,
+											-4.12687972463716E-07*pow(ev.cebraE[6],2)+ 0.701053103610418*ev.cebraE[6] + 0.211631359048795,
+											-3.57953438680052E-05*pow(ev.cebraE[7],2)+ 1.29207015301957*ev.cebraE[7] + 1.07805724372673,
+											-3.03544968865592E-05*pow(ev.cebraE[8],2)+ 0.957884129953653*ev.cebraE[8] -1.25796690476597,
+											};
+				
 				MyFill(table,fmt::format("cebra_E_{}_noCuts",i),1024,0,4096,ev.cebraE[i]);
 				MyFill(table,fmt::format("cebra_E_{}_cebraTime_noCuts",i),7200, 0, 7200, ev.cebraTime[i] / 1e9, 1024,0,4096,ev.cebraE[i]);
-				if(ev.x1 != -1e6 && ev.x2 != -1e6){
 				MyFill(table,fmt::format("cebra_E_{}_ADCShift_noCuts",i),1024,0,4096,cebra_E_ADCShift_noCuts[i]);
+				if(ev.x1 != -1e6 && ev.x2 != -1e6){
+				
 				}
+				//
 
 				//Cebra ADC Channel shift (to make all the detectors line up with each other) with the corresponding plots
 				//good for run 82 - 123
@@ -278,55 +308,59 @@ namespace EventBuilder {
 		if(ev.x1 != -1e6 && ev.x2 != -1e6){
 		MyFill(table,"x1_bothplanes_Cut",600,-300,300,ev.x1);
 		MyFill(table,"x2_bothplanes_Cut",600,-300,300,ev.x2);
+		MyFill(table,"xavg_bothplanes_Cut",600,-300,300,ev.xavg);
+		MyFill(table,"xavg_theta_Cut_bothplanes",600,-300,300,ev.xavg,100,0,TMath::Pi()/2.,ev.theta);
+		MyFill(table,"theta_xavg_Cut_bothplanes",100,0,TMath::Pi()/2.,ev.theta,600,-300,300,ev.xavg);
 
-		MyFill(table,"RelDelayFrontLeftTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayFrontRightTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
+		//MyFill(table,"RelDelayFrontLeftTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
+		//MyFill(table,"RelDelayFrontRightTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
 		// MyFill(table,"RelDelayBackLeftTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeFrontTime);
 		// MyFill(table,"RelDelayBackRightTime_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeFrontTime);
 
 		// MyFill(table,"RelDelayFrontLeftTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeBackTime);
 		// MyFill(table,"RelDelayFrontRightTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackLeftTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackRightTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
-
-
+		//MyFill(table,"RelDelayBackLeftTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
+		//MyFill(table,"RelDelayBackRightTime_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
 
 		}
 
-		MyFill(table,"xavg_bothplanes_Cut",600,-300,300,ev.xavg);
+
+		MyFill(table,"x1_Cut",600,-300,300,ev.x1);
+		MyFill(table,"x2_Cut",600,-300,300,ev.x2);
 		MyFill(table,"x1_x2_Cut",600,-300,300,ev.x1, 600,-300,300,ev.x2);
-		MyFill(table,"xavg_theta_Cut_bothplanes",600,-300,300,ev.xavg,100,0,TMath::Pi()/2.,ev.theta);
 
 		if(ev.x1 != -1e6 && ev.x2 == -1e6){
 		MyFill(table, "x1_only1plane_Cut", 600, -300, 300, ev.x1);
 
-		MyFill(table,"RelDelayFrontLeftTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayFrontRightTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayBackLeftTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayBackRightTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeFrontTime);
+		// Diagnostic timing plots for the delay lines - for x1 only events
+		// MyFill(table,"RelDelayFrontLeftTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayFrontRightTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayBackLeftTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayBackRightTime_nox2_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeFrontTime);
 
-		MyFill(table,"RelDelayFrontLeftTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayFrontRightTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackLeftTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackRightTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayFrontLeftTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayFrontRightTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayBackLeftTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayBackRightTime_nox2_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
 
 		}
 
 		if(ev.x2 != -1e6 && ev.x1 == -1e6){
 		MyFill(table, "x2_only1plane_Cut", 600, -300, 300, ev.x2);
 
-		MyFill(table,"RelDelayFrontLeftTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayFrontRightTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayBackLeftTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeFrontTime);
-		MyFill(table,"RelDelayBackRightTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeFrontTime);
+		// Diagnostic timing plots for the delay lines - for x1 only events
+		// MyFill(table,"RelDelayFrontLeftTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayFrontRightTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayBackLeftTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeFrontTime);
+		// MyFill(table,"RelDelayBackRightTime_nox1_rel_to_frontanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeFrontTime);
 
-		MyFill(table,"RelDelayFrontLeftTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayFrontRightTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackLeftTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
-		MyFill(table,"RelDelayBackRightTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayFrontLeftTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontLeftTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayFrontRightTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayFrontRightTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayBackLeftTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackLeftTime-ev.anodeBackTime);
+		// MyFill(table,"RelDelayBackRightTime_nox1_rel_to_backanode_Cut",8000,-4000,4000,ev.delayBackRightTime-ev.anodeBackTime);
 
 		}
-		
+		/*
 		MyFill(table,"x1_delayBackRightE_Cut",600,-300,300,ev.x1,512,0,4096,ev.delayBackRightE);
 		MyFill(table,"x2_delayBackRightE_Cut",600,-300,300,ev.x2,512,0,4096,ev.delayBackRightE);
 		MyFill(table,"x1_delayBackLeftE_Cut",600,-300,300,ev.x1,512,0,4096,ev.delayBackLeftE);
@@ -340,6 +374,7 @@ namespace EventBuilder {
 		MyFill(table,"x2_delayFrontLeftE_Cut",600,-300,300,ev.x2,512,0,4096,ev.delayFrontLeftE);
 		MyFill(table,"xavg_delayFrontRightE_Cut",600,-300,300,ev.xavg,512,0,4096,ev.delayFrontRightE);
 		MyFill(table,"xavg_delayFrontLeftE_Cut",600,-300,300,ev.xavg,512,0,4096,ev.delayFrontLeftE);
+		
 	
 		Double_t delayBackAvgE = (ev.delayBackRightE+ev.delayBackLeftE)/2.0;
 		MyFill(table,"x1_delayBackAvgE_Cut",600,-300,300,ev.x1,512,0,4096,delayBackAvgE);
@@ -349,11 +384,12 @@ namespace EventBuilder {
 		MyFill(table,"x1_delayFrontAvgE_Cut",600,-300,300,ev.x1,512,0,4096,delayFrontAvgE);
 		MyFill(table,"x2_delayFrontAvgE_Cut",600,-300,300,ev.x2,512,0,4096,delayFrontAvgE);
 		MyFill(table,"xavg_delayFrontAvgE_Cut",600,-300,300,ev.xavg,512,0,4096,delayFrontAvgE);
-	
+		*/
 		MyFill(table,"scintLeft_anodeBack_Cut",512,0,4096,ev.scintLeft,512,0,4096,ev.anodeBack);
 		MyFill(table,"scintLeft_anodeFront_Cut",512,0,4096,ev.scintLeft,512,0,4096,ev.anodeFront);
 		MyFill(table,"scintLeft_cathode_Cut",512,0,4096,ev.scintLeft,512,0,4096,ev.cathode);
-
+		
+		/*
 		MyFill(table,"scintRight_anodeBack_Cut",512,0,4096,ev.scintRight,512,0,4096,ev.anodeBack);
 		MyFill(table,"scintRight_anodeFront_Cut",512,0,4096,ev.scintRight,512,0,4096,ev.anodeFront);
 		MyFill(table,"scintRight_cathode_Cut",512,0,4096,ev.scintRight,512,0,4096,ev.cathode);
@@ -374,16 +410,64 @@ namespace EventBuilder {
 		MyFill(table,"x1_cathode_Cut",600,-300,300,ev.x1,512,0,4096,ev.cathode);
 		MyFill(table,"x2_cathode_Cut",600,-300,300,ev.x2,512,0,4096,ev.cathode);
 		MyFill(table,"xavg_cathode_Cut",600,-300,300,ev.xavg,512,0,4096,ev.cathode);
-
-		double cebra_E_ADCShift[7] = {	1.0			*ev.cebraE[0]+ 0.0,
-											1.25926513604622* ev.cebraE[1] +	-0.816221301153746,
-											1.15315066600388* ev.cebraE[2] +	2.3836130910301,
-											0.996775914060743*ev.cebraE[3] +	0.349941524299766,
-											0.96778941200895*ev.cebraE[4] +		2.15718175526911,
-											1.29891031253784*ev.cebraE[5]+ 		5.52121035990547,
-											1.24777301394747*ev.cebraE[6]+ 		5.67352314139589,
+		*/
+		// 61Ni 2024 shifts, shifting relative to detector 0
+	
+		/*  Ewan 1st order poly ADC shift from run 30, shifting to detector 0
+		double cebra_E_ADCShift[9] = {	1.0			*ev.cebraE[0]+ 0.0,
+											1.00379713698* ev.cebraE[1] +		0.938657472222278,
+											0.973022536807216*ev.cebraE[2] +		5.07562824317392,
+											0.980937108867696*ev.cebraE[3] +		4.84584229967038,
+											0.839851586307652*ev.cebraE[4] +		6.75846580582436,
+											0.855429140072646*ev.cebraE[5]+ 		2.4360407221954,
+											0.750331779586654*ev.cebraE[6]+ 		2.77056077006472,
+											0.983686648324277*ev.cebraE[7]+ 		4.63816494724534,
+											0.993616135741904*ev.cebraE[8]+ 		0.755129423282142,
 											};
+		*/
+		
+		// Now 2nd order poly shift 
+		// Gain shift for runs 29-87 from 61Ni July 2024
+		
+				// double cebra_E_ADCShift[9] = {	1.0			*ev.cebraE[0]+ 0.0,
+				// 							0.00000408008*pow(ev.cebraE[1],2) +	1.00840708*ev.cebraE[1] + 	0.938657472222278,
+				// 							-0.0000600663*pow(ev.cebraE[2],2) +	1.03301495*ev.cebraE[2] - 	1.614522511,
+				// 							-0.0000379175*pow(ev.cebraE[3],2) +	1.017489848*ev.cebraE[3] - 	0.2155004308,
+				// 							-0.0000528035*pow(ev.cebraE[4],2) +	0.898869329*ev.cebraE[4] - 	2.4707291221,
+				// 							-0.0000301067*pow(ev.cebraE[5],2) + 0.889078563*ev.cebraE[5] - 	2.54885394741,
+				// 							-0.00002838567*pow(ev.cebraE[6],2)+ 0.78627124416*ev.cebraE[6] - 3.414072215,
+				// 							-0.000039218043*pow(ev.cebraE[7],2)+ 1.0216552774*ev.cebraE[7] - 0.1850784735,
+				// 							-0.000017332061*pow(ev.cebraE[8],2)+ 1.0110287171*ev.cebraE[8] - 1.1911854577,
+				// 							};
+		
 
+		//
+		//Gain shift for 90 - end of 8.5kG field setting
+		/*
+		double cebra_E_ADCShift[9] = {-0.00000900348*pow(ev.cebraE[0],2) + 0.985283015795496*ev.cebraE[0] -1.44061593200826,
+											-2.00230037138795E-05*pow(ev.cebraE[1],2) +	0.978578302719182*ev.cebraE[1] - 1.78269368726461,
+											-4.60458243556237E-05*pow(ev.cebraE[2],2) +	1.03301495*ev.cebraE[2] -1.13041973539458,
+											-2.9099473816247E-05*pow(ev.cebraE[3],2) +	0.982375601397594*ev.cebraE[3] -0.499765577767619,
+											2.34521317635375E-05*pow(ev.cebraE[4],2) +	0.805730155634936*ev.cebraE[4] + 2.11714817275407,
+											-3.81642236218541E-05*pow(ev.cebraE[5],2) + 1.09993027001675*ev.cebraE[5] -0.599697713732553,
+											7.4481655223796E-05*pow(ev.cebraE[6],2)+ 0.66660953405603*ev.cebraE[6] + 2.91777226919729,
+											-6.45199810062847E-05*pow(ev.cebraE[7],2)+ 1.1886126784402*ev.cebraE[7] -1.32091583140408,
+											-2.25371478404457E-05*pow(ev.cebraE[8],2)+ 0.921640195099382*ev.cebraE[8]-1.52617791655928,
+											};
+		*/
+	
+		// Gain shifts for the 7.15kG seeting from run 197- 
+		double cebra_E_ADCShift[9] = {-2.72156900878375E-19*pow(ev.cebraE[0],2) +	1.0*ev.cebraE[0] -5.6843418860808E-14,
+											-4.97165415075812E-06*pow(ev.cebraE[1],2) +	1.14338957961188*ev.cebraE[1] - 0.445011719623494,
+											-2.35730449363139E-05*pow(ev.cebraE[2],2) +	0.996173496729512*ev.cebraE[2] + 1.7443869915702,
+											-1.32712886414671E-05*pow(ev.cebraE[3],2) +	0.999818365276875*ev.cebraE[3] + 0.941072453624997,
+											-2.76775763630926E-05*pow(ev.cebraE[4],2) +	0.860232802761158*ev.cebraE[4] - 0.459548374380745,
+											-2.22330292983274E-05*pow(ev.cebraE[5],2) + 1.2289729811605*ev.cebraE[5] + 0.283037829606826,
+											-4.12687972463716E-07*pow(ev.cebraE[6],2)+ 0.701053103610418*ev.cebraE[6] + 0.211631359048795,
+											-3.57953438680052E-05*pow(ev.cebraE[7],2)+ 1.29207015301957*ev.cebraE[7] + 1.07805724372673,
+											-3.03544968865592E-05*pow(ev.cebraE[8],2)+ 0.957884129953653*ev.cebraE[8] -1.25796690476597,
+											};
+		
 
 
 // shift from run 237 on 34S(d,pg)
@@ -421,7 +505,7 @@ namespace EventBuilder {
 			MyFill(table, "xavg_timeDifferenceScints", 600, -300, 300, ev.xavg, 12800, -3200,3200, ev.scintRightTime - ev.scintLeftTime);
 
 	
-			for(int i=0; i<7; i++) {
+			for(int i=0; i<9; i++) {
 
 				//CeBrA Relative Time to Left Scint Cut Plots
 				Double_t cebraRelT_toScint = ev.cebraTime[i] - ev.scintLeftTime;
@@ -441,22 +525,50 @@ namespace EventBuilder {
 				else if(i == 4){
 				MyFill(table,"cebra_RelTime_toScint_3x4_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
 				else if(i > 4){
-				MyFill(table,"cebra_RelTime_toScint_1x1_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
+				MyFill(table,"cebra_RelTime_toScint_3x3_Cut_1991keV",25600,-3200,3200,cebraRelT_toScint);}
 
 				}
 
 				//adjust accordingly using the "cebra_RelTime_toScint_I" plots
 
 
+				//~~~FOR PROTONS~~~~ 61Ni July 2024 Time Shifts for 8.5kG ~ runs 29-184
+				/*
+				double cebra_RelTime_toScint_Shift[9] = {						1149.24, 
+															1152.5,
+															1151.58,
+															1151.28,
+															1125.73,
+															1121.25,
+															1119.5,
+															1118.75,
+															1126.54};
+				*/
+				// ~~~FOR DEUTERONS~~~ 61Ni July 2024 Time Shifts for 8.5kG ~ runs 29-184
+				
+				// double cebra_RelTime_toScint_Shift[9] = {	1203, 
+				// 											1207,
+				// 											1204,
+				// 											1204,
+				// 											1179,
+				// 											1175,
+				// 											1175,
+				// 											1173,
+				// 											1180.5};
+				
 
-				double cebra_RelTime_toScint_Shift[7] = {						1166, 
-															1164,
-															1164,
-															1164,
-															1133,
-															1171,
-															1171};
-
+				// 61Ni July 2024 Time Shifts for 7.15 kG ~ runs 197-
+				// /*
+				double cebra_RelTime_toScint_Shift[9] = {	1158.5, 
+															1162.5,
+															1160.5,
+															1160.5,
+															1135.5,
+															1130.5,
+															1129.5,
+															1128.5,
+															1136.5};
+				// */
 /*
 				double cebra_RelTime_toScint_Shift[7] = {						1159.24, 
 															1157.28,
@@ -478,11 +590,11 @@ namespace EventBuilder {
 
 				//CeBrA time cut ... make sure the shifts are good
 				// double cebra_RelTime_Width = 6.0;
-				double cebra_RelTime_Width = 4;
+				double cebra_RelTime_Width = 4.0;
 
 				double cebraRelT_toScint_Shifted = cebraRelT_toScint + cebra_RelTime_toScint_Shift[i];
-				MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintRight", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toRightScint);
-				MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintLeft", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toScint);
+				// MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintRight", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toRightScint);
+				// MyFill(table, fmt::format("xavg_vs_timeDiff_cebra{}_scintLeft", i), 600, -300, 300, ev.xavg, 6400, -3200, 3200, cebraRelT_toScint);
 
 				if(i < 4){
 				MyFill(table,"cebra_RelTime_toScint_Shifted_zonys_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
@@ -492,7 +604,7 @@ namespace EventBuilder {
 				MyFill(table,"cebra_RelTime_toScint_Shifted_3x4_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
 
 				if(i > 4){
-				MyFill(table,"cebra_RelTime_toScint_Shifted_1x1_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
+				MyFill(table,"cebra_RelTime_toScint_Shifted_3x3_Cut_vs_xavg",600,-300,300,ev.xavg,25600,-3200,3200,cebraRelT_toScint_Shifted);}
 
 /*
 				if(ev.xavg >= 35 && ev.xavg <= 45 && cebra_E_ADCShift[i] > 1030 && cebra_E_ADCShift[i] < 1250){
@@ -514,31 +626,36 @@ namespace EventBuilder {
 					MyFill(table,"xavg_TimeCutShift_Cut",600,-300,300,ev.xavg);
 					// MyFill(table,"xavg_TimeCutShift_Calibrated_Cut",2000,0,10000,-16.1153737975147* ev.xavg+ 5214.60247016019);
 					MyFill(table,fmt::format("cebra_E_{}_TimeCutShift_Cut",i),512,0,4096,ev.cebraE[i]);
-					MyFill(table,fmt::format("xavg_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.xavg,512,0,4096,ev.cebraE[i]);
-					MyFill(table,fmt::format("x1_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.x1,512,0,4096,ev.cebraE[i]);
+					//MyFill(table,fmt::format("xavg_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.xavg,512,0,4096,ev.cebraE[i]);
+					//MyFill(table,fmt::format("x1_cebraE_{}_TimeCutShift_Cut",i),600,-300,300,ev.x1,512,0,4096,ev.cebraE[i]);
 					MyFill(table,fmt::format("cebra_RelTime_toScint_{}_TimeCutShift_Cut",i),400,-100,100,cebraRelT_toScint_Shifted);
 
+					MyFill(table,fmt::format("cebra_E_TimeCutShift_Cut",i),512,0,4096,ev.cebraE[i]);
+
+
+					// Each detector p-g matrix plotted separately
+					MyFill(table,fmt::format("AA_xavg_cebraE_{}_Sum_TimeCutShift_Cut",i),600,-300,300,ev.xavg,1024,0,4096,cebra_E_ADCShift[i]);
 					//All the detectors summed using the ADC Shift values
 					MyFill(table,"AA_xavg_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.xavg,1024,0,4096,cebra_E_ADCShift[i]);
 					
 					// MyFill(table,"AA_xavg_cebraE_Sum_TimeCutShift_Calibrated_Cut",2000,0,10000,-16.1153737975147* ev.xavg+ 5214.60247016019,2000,0,10000,6.84991856 * cebra_E_ADCShift[i] + 51.04455367);
-					MyFill(table,"AA_x1_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.x1,512,0,4096,cebra_E_ADCShift[i]);
+					//MyFill(table,"AA_x1_cebraE_Sum_TimeCutShift_Cut",600,-300,300,ev.x1,512,0,4096,cebra_E_ADCShift[i]);
 
-					//Energy Calibrated to the GS band 
-					// double cebra_E_EnergyCalibrated = 1.77817107*cebra_E_ADCShift[i]+4.74455886;   // run 286 -   61Ni @8.7kG
+					//Energy Calibrated to the GS band for 61 Ni July 2024, 2 point calibration
+					double cebra_E_EnergyCalibrated = 2.1345951629*cebra_E_ADCShift[i]+193.7150368;
+					
+					// Energy calibration for 7.15kG setting
+					//double cebra_E_EnergyCalibrated = 2.598957532*cebra_E_ADCShift[i]-12.36847047833;
 
 
-					//Shifting x1 so run_82_123 x1_bothplanes_cut lines up with run_162_183
-					// double x1_shifted = 1.00248436*ev.x1 + 2.46724718; 
+					// 61Ni energy calibration for 8.5kG setting
+					// double xavg_shifted = -0.00164323365798*pow(ev.xavg,2) - 19.2340967413*ev.xavg +	3309.8302107;
 
-					//run 184-232 energy calibrated
-					//double x1_shifted = -21.1595478758973*ev.x1+	2112.63002693692;
-
-					//run 245-283 energy calibrated
-					//double xavg_shifted = -17.1003806*ev.xavg +		6700.1328827;
+					// 61Ni energy calibration for 7.15kG setting
+					double xavg_shifted = -0.013139237615*pow(ev.xavg,2) - 13.80004977*ev.xavg +	9790.048149635;
 
 					//run 291-351 energy calibrated
-					double x1_shifted = -20.6867155520197*ev.x1+	2377.1950716545;
+					// double x1_shifted = -20.6867155520197*ev.x1+	2377.1950716545;
 
 
 					// MyFill(table,"AA_xavg_cebraE_Sum_EnergyCalibrated_TimeCutShift_Cut",600,-300,300,ev.xavg,2048, 0, 8192,cebra_E_EnergyCalibrated);
@@ -549,7 +666,13 @@ namespace EventBuilder {
 					// MyFill(table,"x1_ENERGYCAL_TimeCutShift_Cut",512,0,8192,x1_shifted);
 
 					//MyFill(table,"AA_ENERGYCAL_xavg_cebraE_TimeCutShift_Cut",4096, 0, 16384,xavg_shifted,2048,0,8192,cebra_E_EnergyCalibrated);
-					//MyFill(table, "xavg_ENERGYCAL_TimeCutShift_Cut", 4096, 0, 16384,xavg_shifted);
+
+					// Plot xavg & p-g matrix with xavg calibrated but not Cebra 
+					MyFill(table, "AA_xavg_ENERGYCAL_TimeCutShift_Cut", 4096, 0, 16384,xavg_shifted);
+					MyFill(table,"AA_ENERGYCAL_xavg_cebraE_TimeCutShift_Cut",4096, 0, 16384,xavg_shifted,2048,0,4096,cebra_E_ADCShift[i]);
+
+					// Fully Energy calibrated p-g matrix
+					MyFill(table,"AA_xavg_cebraE_Sum_EnergyCalibrated_TimeCutShift_Cut",4096, 0, 16384,xavg_shifted,2048, 0, 8192,cebra_E_EnergyCalibrated);
 
 
 					// Conditional statement that plots certain decay bands of interest
@@ -559,10 +682,16 @@ namespace EventBuilder {
 					// 	MyFill(table, "AA_xavg_with_gamma_condition", 4096, 0, 16384, xavg_shifted);
 					// }
 
-					// if ( (cebra_E_EnergyCalibrated <= (x1_shifted) + 60)  && (cebra_E_EnergyCalibrated >= (x1_shifted) - 60) ){
-					// 	MyFill(table, "AA_GS_band", 4096, 0, 16384, x1_shifted, 2048, 0, 8192,cebra_E_EnergyCalibrated );
-					// 	MyFill(table, "AA_x1_with_gamma_condition_GS", 256, 0, 8192, x1_shifted);
-					// }
+					if ( (cebra_E_EnergyCalibrated <= (xavg_shifted) + 80)  && (cebra_E_EnergyCalibrated >= (xavg_shifted) - 80) ){
+					 	MyFill(table, "AA_GS_band", 4096, 0, 16384, xavg_shifted, 2048, 0, 8192,cebra_E_EnergyCalibrated);
+					 	MyFill(table, "AA_xavg_with_gamma_condition_GS", 512, 0, 8192, xavg_shifted);
+					 }
+
+
+					if ( (cebra_E_EnergyCalibrated <= (xavg_shifted - 1172) + 60)  && (cebra_E_EnergyCalibrated >= (xavg_shifted - 1172) - 60) ){
+					 	MyFill(table, "AA_first_2+_band", 4096, 0, 16384, xavg_shifted, 2048, 0, 8192,cebra_E_EnergyCalibrated);
+					 	MyFill(table, "AA_xavg_with_gamma_condition_first_2+", 512, 0, 8192, xavg_shifted);
+					 }
 
 					// if ( (cebra_E_EnergyCalibrated <= (x1_shifted - 1172) + 60)  && (cebra_E_EnergyCalibrated >= (x1_shifted - 1172) - 60) ){
 					// 	MyFill(table, "AA_first_band", 4096, 0, 16384, x1_shifted, 2048, 0, 8192,cebra_E_EnergyCalibrated );
@@ -582,7 +711,7 @@ namespace EventBuilder {
 
 
 					//Zony plots (small CeBr3 detectors, small zebras, like a small horses or a pony)
-					if(i != 4 && i != 5 && i != 6){
+					if(i != 4 && i != 5 && i != 6 && i != 7 && i != 8){
 							// MyFill(table,"cebraE_zony_cebraE4_TimeCut_Cut",512,0,4096,cebra_E_ADCShift[i],512,0,4096,cebra_E_ADCShift[4]);
 							MyFill(table,"xavg_cebraE_zony_TimeCutShift_Cut",600,-300,300,ev.xavg,512,0,4096,cebra_E_ADCShift[i]);
 							MyFill(table,"x1_cebraE_zony_TimeCutShift_Cut",600,-300,300,ev.x1,512,0,4096,cebra_E_ADCShift[i]);
@@ -607,14 +736,14 @@ namespace EventBuilder {
 			// double x1_shifted = -21.1595478758973*ev.x1+	2112.63002693692;
 			// MyFill(table,"x1_ENERGYCAL_Cut",2048,0,8192,x1_shifted);
 
-			//run 245-285 energy calibrated
-			//double xavg_shifted = -17.1003806*ev.xavg +		6700.1328827;
-			//MyFill(table,"xavg_ENERGYCAL_Cut",2048,0,8192,xavg_shifted);
+			//61Ni energy calibrated
+			double xavg_shifted = -0.00164323365*pow(ev.xavg,2) - 19.2340967413927*ev.xavg +	3309.83021070096;
+			MyFill(table,"xavg_ENERGYCAL_Cut",512,0,8192,xavg_shifted);
 
 
 
 			//	plots that do not contain scint stuff
-			for(int i=0; i<7; i++) {
+			for(int i=0; i<9; i++) {
        			if(ev.cebraE[i] != -1 && ev.x1 != -1e6 && ev.x2 != -1e6){
 	
 					MyFill(table,fmt::format("cebra_E_{}_Cut",i),1024,0,4096,ev.cebraE[i]);
@@ -633,11 +762,11 @@ namespace EventBuilder {
 
 
 		//plots for CeBrA that are relative to Detector 0
-		// for(int i=1; i<5; i++) {
-		// 	if(ev.cebraE[0]!=-1 && ev.cebraE[i]!=-1){
-		// 		MyFill(table,fmt::format("cebraTime0_cebraTime{}_Cut",i),5000,-15000,15000,ev.cebraTime[0]-ev.cebraTime[i]);
-		// 	}
-		// }
+		for(int i=1; i<9; i++) {
+			if(ev.cebraE[0]!=-1 && ev.cebraE[i]!=-1){
+				MyFill(table,fmt::format("cebraTime0_cebraTime{}_Cut",i),5000,-15000,15000,ev.cebraTime[0]-ev.cebraTime[i]);
+			}
+		}
 
 		
 	}

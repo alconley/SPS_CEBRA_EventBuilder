@@ -58,6 +58,8 @@ namespace EventBuilder {
 					case 4: this_chan.attribute = DetAttribute::CEBRA4; break;
 					case 5: this_chan.attribute = DetAttribute::CEBRA5; break;
 					case 6: this_chan.attribute = DetAttribute::CEBRA6; break;
+					case 7: this_chan.attribute = DetAttribute::CEBRA7; break;
+					case 8: this_chan.attribute = DetAttribute::CEBRA8; break;
 
 					// case 5: this_chan.attribute = DetAttribute::CEBRA5; break;
 

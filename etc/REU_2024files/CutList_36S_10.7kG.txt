@@ -1,0 +1,2 @@
+Name File VarX VarY
+EdEtritons /home/spieker-group/Experiments/REU_June_2024/Workingdir/cuts/triton10_7kG.root scintLeft anodeBack

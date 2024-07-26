@@ -1,0 +1,2 @@
+Name File VarX VarY
+edeProtons /home/spieker-group/Experiments/61Ni_CeBrA_July2024/WorkingDir/cuts/61Ni_pcut_7.15kG.root scintLeft anodeBack

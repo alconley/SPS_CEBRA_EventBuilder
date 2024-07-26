@@ -17,7 +17,7 @@ namespace EventBuilder {
 	
 	void FastSort::ResetCEBRA() 
 	{
-		for(int i=0; i<5; i++)
+		for(int i=0; i<9; i++) // this was 5 before i changed it to 9 for the new detectors --bryan
 			fastEvent.cebraArray[i] = cebrblank;
 	}
 
@@ -105,7 +105,7 @@ namespace EventBuilder {
 
 	/*Assign a set of CEBRA data that falls within the coincidence window*/
 	void FastSort::ProcessCEBRA(unsigned int scint_index) {
-	for(int i=0; i<7; i++) { //loop over CEBRA detectors
+	for(int i=0; i<9; i++) { //loop over CEBRA detectors
 		std::vector<DetectorHit> cebr;
 
 		if(slowEvent.cebraArray[i].cebr.size() == 0) continue; //save some time on empties

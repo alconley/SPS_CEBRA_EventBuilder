@@ -38,6 +38,8 @@ namespace EventBuilder {
 		CEBRA4,
 		CEBRA5,
 		CEBRA6,
+		CEBRA7,
+		CEBRA8,
 
 		ScintLeftCopy,
 		/*
